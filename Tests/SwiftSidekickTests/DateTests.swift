@@ -52,8 +52,18 @@ extension DateTests {
         check(testDate, .long, dateString: "November 10, 1983", timeString: "08:09:09 PM PST")
         check(testDate, .full, dateString: "Thursday, November 10, 1983", timeString: "08:09:09 PM Pacific Standard Time")
     }
-}
-private extension DateTests {
+    func testMath() {
+        do {
+            var date = try testDate + Date.Components.year(1) + Date.Components.day(1) + Date.Components.hour(1) + Date.Components.minute(1) + Date.Components.second(1)
+            print(date.string)
+            date = try date - Date.Components.year(1) - Date.Components.day(1) - Date.Components.hour(1) - Date.Components.minute(1) - Date.Components.second(1)
+            print(date.string)
+            print(testDate.string)
+            XCTAssert(date == testDate, "Dates don't match")
+        } catch {
+            XCTAssert(false, "\(error) was thrown")
+        }
+    }
 }
 
 private extension Date.StringFormats {
