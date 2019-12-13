@@ -6,12 +6,15 @@
 import Foundation
 
 public extension Date {
-    static func + (lhs: Date, rhs: Components) throws -> Date {
+    func add(_ component: Components) throws -> Date {
         let calendar = Calendar.autoupdatingCurrent
-        guard let newDate = calendar.date(byAdding: rhs.calendarComponent, value: rhs.value, to: lhs) else {
-            throw MathErrors.unableToAdd(lhs, rhs)
+        guard let newDate = calendar.date(byAdding: component.calendarComponent, value: component.value, to: self) else {
+            throw MathErrors.unableToAdd(self, component)
         }
         return newDate
+    }
+    static func + (lhs: Date, rhs: Components) throws -> Date {
+        return try lhs.add(rhs)
     }
     static func - (lhs: Date, rhs: Components) throws -> Date {
         return try lhs + rhs.new(value: rhs.value * -1)
