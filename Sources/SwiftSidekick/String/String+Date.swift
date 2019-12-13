@@ -8,8 +8,11 @@ import Foundation
 public extension String {
     var date: Date? { date(with: .storage) }
     func date(with format: Date.StringFormats) -> Date? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = format.value
-        return formatter.date(from: self)
+        func formatDate(with format: String) -> Date? {
+            let formatter = DateFormatter()
+            formatter.dateFormat = format
+            return formatter.date(from: self)
+        }
+        return formatDate(with: format.all) ?? formatDate(with: format.date) ?? formatDate(with: format.time)
     }
 }
