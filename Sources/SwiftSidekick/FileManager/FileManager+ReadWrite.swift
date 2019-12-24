@@ -51,12 +51,6 @@ public extension FileManager {
         guard let url = URL(string: path) else { throw URLErrors.couldNotCreateURL(path, pathDirectory) }
         return url
     }
-}
-extension FileManager {
-    func data(from string: String) throws -> Data {
-        guard let data = string.data(using: .utf8) else { throw WriteErrors.couldNotConvertToData(string) }
-        return data
-    }
     func createDirectory(from url: URL) throws {
         switch exsists(at: url) {
         case .isDirectory: return
@@ -66,6 +60,12 @@ extension FileManager {
         case .doesNotExsist:
             try createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
         }
+    }
+}
+extension FileManager {
+    func data(from string: String) throws -> Data {
+        guard let data = string.data(using: .utf8) else { throw WriteErrors.couldNotConvertToData(string) }
+        return data
     }
 }
 public extension FileManager {
