@@ -3,25 +3,47 @@
 //
 
 import SwiftUI
+#if os(macOS)
+import AppKit
+#endif
+#if os(iOS)
+import UIKit
+#endif
 
 public extension SFSymbols {
     var name: String { rawValue }
-    @available(macOS 11.0, *)
+    @available(macOS 10.15, iOS 13, *)
     var image: Image {
         Image(systemName: name)
     }
-    @available(macOS 11.0, *)
+    #if os(macOS)
+    @available(macOS 10.15, *)
     var nsImage: NSImage? {
-        nsImage(accessibilityDescription: nil)
+        NSImage(systemSymbolName: name, accessibilityDescription: nil)
     }
-    @available(macOS 11.0, *)
-    func nsImage(accessibilityDescription: String?) -> NSImage? {
+    @available(macOS 10.15, *)
+    func nsImage(accessibilityDescription: String) -> NSImage? {
         NSImage(systemSymbolName: name, accessibilityDescription: accessibilityDescription)
     }
+    #endif
+    #if os(iOS)
+    @available(iOS 13, *)
+    var uiImage: UIImage? {
+        UIImage(systemName: name)
+    }
+    @available(iOS 13, *)
+    func uiImage(compatibleWith traitCollection: UITraitCollection) -> UIImage? {
+        UIImage(systemName: name, compatibleWith: traitCollection)
+    }
+    @available(iOS 13, *)
+    func uiImage(withConfiguration configuration: UIImage.Configuration) -> UIImage? {
+        UIImage(systemName: name, withConfiguration: configuration)
+    }
+    #endif
 }
-@available(macOS 11.0, *)
+@available(macOS 10.15, iOS 13, *)
 public extension Image {
-    init(sfSymbol: SFSymbols) {
+    init(_ sfSymbol: SFSymbols) {
         self = sfSymbol.image
     }
 }
