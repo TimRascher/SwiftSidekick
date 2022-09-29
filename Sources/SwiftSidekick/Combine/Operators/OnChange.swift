@@ -20,7 +20,8 @@ extension Publishers {
 }
 extension Publishers.OnChange: Publisher {
     public func receive<S>(subscriber: S) where S: Subscriber, S.Input == Output, S.Failure == Failure {
-        
+        let subscription = Sub(self, subscriber)
+        subscriber.receive(subscription: subscription)
     }
 }
 public extension Publishers.OnChange {
@@ -31,7 +32,7 @@ public extension Publishers.OnChange {
         private var lastDemand: Subscribers.Demand?
         private var lastValue: Input?
         
-        private init(_ publisher: Publishers.OnChange<UpStream>, _ subscriber: S) {
+        fileprivate init(_ publisher: Publishers.OnChange<UpStream>, _ subscriber: S) {
             self.publisher = publisher
             self.subscriber = subscriber
             publisher.upStream.subscribe(self)
