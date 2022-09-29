@@ -68,3 +68,9 @@ extension Publishers.OnChange.Sub: Subscriber {
         subscriber.receive(completion: completion)
     }
 }
+
+extension Publisher where Output: Equatable {
+    func onChange() -> Publishers.OnChange<Self> {
+        Publishers.OnChange(self)
+    }
+}
