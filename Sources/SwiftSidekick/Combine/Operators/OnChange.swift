@@ -59,7 +59,9 @@ extension Publishers.OnChange.Sub: Subscriber {
     }
     private var demand: Subscribers.Demand { lastDemand ?? .none }
     public func receive(_ input: UpStream.Output) -> Subscribers.Demand {
-        if let lastValue = lastValue, lastValue == input { return demand }
+        if let lastValue = lastValue {
+            if lastValue == input { return demand }
+        }
         lastValue = input
         let demand = subscriber.receive(input)
         lastDemand = demand
