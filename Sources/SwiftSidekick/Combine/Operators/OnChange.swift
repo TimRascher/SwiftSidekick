@@ -69,7 +69,7 @@ extension Publishers.OnChange.Sub: Subscriber {
     }
 }
 
-extension Publisher where Output: Equatable {
+public extension Publisher where Output: Equatable {
     func onChange() -> Publishers.OnChange<Self> {
         Publishers.OnChange(self)
     }
