@@ -12,16 +12,16 @@ import UIKit
 
 public extension SFSymbols {
     var name: String { rawValue }
-    @available(macOS 10.15, iOS 13, *)
+    @available(macOS 11, iOS 13, *)
     var image: Image {
         Image(systemName: name)
     }
     #if os(macOS)
-    @available(macOS 10.15, *)
+    @available(macOS 11, *)
     var nsImage: NSImage? {
         NSImage(systemSymbolName: name, accessibilityDescription: nil)
     }
-    @available(macOS 10.15, *)
+    @available(macOS 11, *)
     func nsImage(accessibilityDescription: String) -> NSImage? {
         NSImage(systemSymbolName: name, accessibilityDescription: accessibilityDescription)
     }
@@ -41,7 +41,7 @@ public extension SFSymbols {
     }
     #endif
 }
-@available(macOS 10.15, iOS 13, *)
+@available(macOS 11, iOS 13, *)
 public extension Image {
     init(_ sfSymbol: SFSymbols) {
         self = sfSymbol.image
